@@ -39,7 +39,7 @@ function App() {
 
       //seta o valor novo junto com as info já existentes.
       setTask([...task, newTask]);
-      console.log(newTask)
+      window.alert("Tarefa criada com sucesso") 
       setTaskInput("");
     }   
     
@@ -66,31 +66,45 @@ function App() {
   }
 
   return (
-    <div className="bg-slate-900 min-h-screen flex flex-col items-center py-20 px-3">
-      <h1 className="text-3xl font-bold text-white">Todo App</h1>
+    <div className="bg-slate-900 min-h-screen flex flex-col items-center py-20 px-1 text-sm md:text-base">
+      <h1 className="text-2xl font-bold text-white md:text-3xl">Todo App</h1>
+
       <div className="mx-auto p-5 max-w-150 w-full space-y-5">
-        <form action="#" className="flex gap-4 bg-slate-800 px-0 rounded-2xl h-12 md:flex-row md:pl-5 md:px-0 " onSubmit={addTask}>
+        {/* form */}
+        <form action="#" className="flex rounded-sm gap-2 " onSubmit={addTask}>
+
           <input 
-            type="text" name="text" id="text" placeholder="Adicione uma nova tarefa.." 
-            className="flex-1 focus:outline-none text-white py-3 px-2"
+            type="text" 
+            name="text" 
+            id="text" 
+            placeholder="Adicione uma nova tarefa.." 
             value={taskInput}
             onChange={handleInput}
+            className="flex-1 focus:outline-none text-white py-3 px-2 bg-slate-800"
           />
             
-          <button type="submit" className="cursor-pointer" className="bg-blue-500 px-10 h-full rounded-2xl cursor-pointer text-white hover:bg-blue-500/75 transition-all w-full md:w-0">+</button>
+          <button t
+            type="submit" 
+            className="bg-blue-500 px-5 cursor-pointer text-white hover:bg-blue-500/75 transition-all"
+          >
+            +
+          </button>
         </form>
 
+        {/* info */}
         <div className="flex items-center justify-between">
           <p className="text-white">Tarefas criadas <span className="bg-slate-700 text-white rounded-full px-3">{task.length}</span></p>
 
           {task.length > 0 && 
               <button 
-                className="bg-red-400 px-4 h-full rounded-2xl cursor-pointer text-white hover:bg-red-400/75 transition-all disabled:c"
+                className="bg-red-400 px-4 h-full rounded-2xl cursor-pointer text-white hover:bg-red-400/75 transition-all "
                 onClick={deleteAllTasks}
                 >
-                Deletar todas as tarefas
+                Excluir tarefas
               </button>} 
         </div>
+
+        {/* lista - todos */}
         <div className="w-full rounded-2xl space-y-3 max-h-130 h-full py-4 overflow-y-hidden">
           <ul className="flex flex-col gap-2 text-white ">
             {task.map((todo) => (
@@ -100,18 +114,17 @@ function App() {
                   className="hover:text-red-400 cursor-pointer transition-all"
                   onClick={() => deleteTask(todo.id)}
                 >
-                  <Trash2 size={18}/>
+                  <Trash2 size={16}/>
                 </button>
                 
               </li>
             ))}            
-          </ul>
-          
+          </ul>          
         </div>
         {task.length > 0 ? (
              null
           ): (
-            <p className="text-white text-center">Você não tem tarefas no momento, adicione uma </p>
+            <p className="text-white text-center">Você não tem tarefas no momento, criei uma agora mesmo. </p>
           )}
       </div>
     </div>
