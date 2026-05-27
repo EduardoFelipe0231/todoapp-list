@@ -39,7 +39,6 @@ function App() {
 
       //seta o valor novo junto com as info já existentes.
       setTask([...task, newTask]);
-      window.alert("Tarefa criada com sucesso") 
       setTaskInput("");
     }   
     
@@ -54,7 +53,6 @@ function App() {
   const deleteTask = (taskId) => {
     if(window.confirm("Você tem certeza que deseja remover essa tarefa?"))
     setTask(task.filter((t) => t.id !== taskId ));
-    console.log(taskId)
   }
 
 
@@ -65,6 +63,8 @@ function App() {
     }    
   }
 
+
+  
   return (
     <div className="bg-slate-900 min-h-screen flex flex-col items-center py-20 px-1 text-sm md:text-base">
       <h1 className="text-2xl font-bold text-white md:text-3xl">Todo App</h1>
@@ -83,7 +83,7 @@ function App() {
             className="flex-1 focus:outline-none text-white py-3 px-2 bg-slate-800"
           />
             
-          <button t
+          <button
             type="submit" 
             className="bg-blue-500 px-5 cursor-pointer text-white hover:bg-blue-500/75 transition-all"
           >
@@ -115,8 +115,7 @@ function App() {
                   onClick={() => deleteTask(todo.id)}
                 >
                   <Trash2 size={16}/>
-                </button>
-                
+                </button>                
               </li>
             ))}            
           </ul>          
