@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { Trash2, Circle, Pencil, CircleCheckBig, Grid, List, LayoutGrid, Delete, Trash, Plus, Check, CheckCircle, CheckCircle2, CheckCircle2Icon, Moon, Bell, Sun} from "lucide-react"
 import { useState } from "react"
 
-import { tabTitle } from "./utils/General";
+import { tabTitle} from "./utils/General";
+
 
 import { Tooltip } from 'react-tooltip'
 
@@ -82,8 +83,21 @@ function App() {
 
   //DarkMode - LightMode
 
-  const [theme, setTheme] = useState('lighta')
+  const [theme, setTheme] = useState('light')
   
+  // =============================================================== \\ 
+
+  //Horario
+  const d = new Date();
+
+  const f = new Intl.DateTimeFormat("pt-br", {
+    day: '2-digit',
+    month: "long",
+    year: 'numeric',
+  })
+
+ 
+
   return (
     <div className="bg-zinc-800 min-h-screen flex flex-col items-center text-sm md:text-base">
       <div className="w-full bg-zinc-300 h-50 py-3 px-3 rounded-b-4xl shadow-2xs">
@@ -94,8 +108,8 @@ function App() {
               </button>              
           </header>
           <div className="flex flex-col items-center justify-center ">
-              <h1 className="text-center mt-14 text-3xl font-bold">Bom dia, Visitante 😎</h1>
-              <p className="font-mono text-zinc-600">Hoje é 08 Jun 2026 </p>  
+              <h1 className="text-center mt-14 text-3xl font-bold">Olá, Visitante 😎</h1>
+              <p className="font-mono text-zinc-600">Hoje é {f.format(d)}</p>  
           </div>          
       </div>
 
@@ -167,13 +181,14 @@ function App() {
           {toogleLayout ? (
             <ul className="grid grid-cols-1 gap-2 text-white">
               {task.map((todo) => (
-                <li key={todo.id} className="flex flex-wrap gap-4 p-5 rounded-2xl bg-zinc-700 items-center border-l-4 border-red-400">
+                <li key={todo.id} className="flex flex-wrap gap-4 p-5 rounded-2xl bg-zinc-700 items-center border-l-4 border-indigo-400">
                   <button 
                     className="hover:text-red-400 cursor-pointer transition-all"
                   >
                     <Circle size={16}/>                  
                   </button> 
-                  <p className="break-all flex-1">{todo.text}</p>                
+                  <p className="break-all flex-1">{todo.text}</p>   
+                                 
                   <button 
                     className="hover:text-zinc-400 cursor-pointer transition-all"
                   >
@@ -191,7 +206,7 @@ function App() {
           ) : (
             <ul className="grid grid-cols-2 gap-2 text-white">
               {task.map((todo) => (
-                <li key={todo.id} className="flex flex-wrap gap-3 px-2 py-6 rounded-2xl bg-zinc-700 items-center border-l-4 border-red-400">
+                <li key={todo.id} className="flex flex-wrap gap-3 px-2 py-6 rounded-2xl bg-zinc-700 items-center border-l-4 border-indigo-400">
                   <button 
                     className="hover:text-red-400 cursor-pointer transition-all"
                   >
