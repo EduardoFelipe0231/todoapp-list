@@ -1,12 +1,28 @@
-import { useEffect } from "react";
-
-import { Trash2, Circle, Pencil, CircleCheckBig, Grid, List, LayoutGrid, Delete, Trash, Plus, Check, CheckCircle, CheckCircle2, CheckCircle2Icon, Moon, Bell, Sun} from "lucide-react"
-import { useState } from "react"
-
+import { useEffect, useState } from "react";
 import { tabTitle} from "./utils/General";
-
-
 import { Tooltip } from 'react-tooltip'
+import NotTasks from './Components/NotTasks'
+
+import { 
+  Trash2, 
+  Circle, 
+  Pencil, 
+  CircleCheckBig, 
+  Grid, 
+  List, 
+  LayoutGrid, 
+  Delete, 
+  Trash, 
+  Plus, 
+  Check, 
+  CheckCircle, 
+  CheckCircle2, 
+  CheckCircle2Icon, 
+  Moon, 
+  Bell, 
+  Sun} 
+from "lucide-react"
+
 
 function App() {
 
@@ -83,11 +99,11 @@ function App() {
 
   //DarkMode - LightMode
 
-  const [theme, setTheme] = useState('light')
+  const [theme, setTheme] = useState(true)
   
   // =============================================================== \\ 
 
-  //Horario
+  //Data
   const d = new Date();
 
   const f = new Intl.DateTimeFormat("pt-br", {
@@ -97,18 +113,20 @@ function App() {
   })
 
  
-
   return (
-    <div className="bg-zinc-800 min-h-screen flex flex-col items-center text-sm md:text-base">
-      <div className="w-full bg-zinc-300 h-50 py-3 px-3 rounded-b-4xl shadow-2xs">
+    <div className="bg-zinc-800 min-h-screen flex flex-col items-center text-sm md:text-base ">
+      <div className="w-full bg-zinc-300 py-6 px-3 rounded-b-4xl shadow-2xs">
           <header className="container mx-auto flex justify-between items-center gap-5">
               <h3 className="text-sm font-bold md:text-2xl text-zinc-900 flex-1 tracking-wide">Todo List</h3>              
-              <button className="bg-zinc-800 hover:bg-zinc-800/75 p-2 rounded-full text-zinc-300 cursor-pointer shadow-2xl transition-all">
-                {theme === "light" ? <Moon size={22} /> : <Sun size={22} />}
+              <button 
+                className="bg-zinc-800 hover:bg-zinc-800/75 p-2 rounded-full text-zinc-300 cursor-pointer shadow-2xl transition-all"
+                onClick={() => {setTheme(!theme)}}
+                >
+                {theme  ? <Moon size={22} /> : <Sun size={22} />}
               </button>              
           </header>
           <div className="flex flex-col items-center justify-center ">
-              <h1 className="text-center mt-14 text-3xl font-bold">Olá, Visitante 😎</h1>
+              <h1 className="text-center mt-6 text-4xl font-bold">Olá, Visitante 😎</h1>
               <p className="font-mono text-zinc-600">Hoje é {f.format(d)}</p>  
           </div>          
       </div>
@@ -177,13 +195,14 @@ function App() {
 
 
         {/* lista - todos */}
-        <div className="w-full rounded-2xl space-y-3 h-140 py-4 px-1 overflow-y-auto scrollbar-thumb-zinc-500/60 scrollbar-track-zinc-900/10">
+        {task.length > 0 ? (
+          <div className="w-full rounded-2xl space-y-3 py-4 px-1 scrollbar-thumb-zinc-500/60 scrollbar-track-zinc-900/10">
           {toogleLayout ? (
             <ul className="grid grid-cols-1 gap-2 text-white">
               {task.map((todo) => (
                 <li key={todo.id} className="flex flex-wrap gap-4 p-5 rounded-2xl bg-zinc-700 items-center border-l-4 border-indigo-400">
                   <button 
-                    className="hover:text-red-400 cursor-pointer transition-all"
+                    className="hover:text-indigo-400 cursor-pointer transition-all"
                   >
                     <Circle size={16}/>                  
                   </button> 
@@ -195,7 +214,7 @@ function App() {
                     <Pencil size={16}/>                  
                   </button>
                   <button 
-                    className="hover:text-red-400 cursor-pointer transition-all"
+                    className="hover:text-red-300/75 cursor-pointer transition-all"
                     onClick={() => deleteTask(todo.id)}
                   >
                     <Trash2 size={16}/>                  
@@ -208,7 +227,7 @@ function App() {
               {task.map((todo) => (
                 <li key={todo.id} className="flex flex-wrap gap-3 px-2 py-6 rounded-2xl bg-zinc-700 items-center border-l-4 border-indigo-400">
                   <button 
-                    className="hover:text-red-400 cursor-pointer transition-all"
+                    className="hover:text-indigo-400 cursor-pointer transition-all"
                   >
                     <Circle size={16}/>                  
                   </button> 
@@ -219,7 +238,7 @@ function App() {
                     <Pencil size={16}/>                  
                   </button>
                   <button 
-                    className="hover:text-red-400 cursor-pointer transition-all"
+                    className="hover:text-red-300/75 cursor-pointer transition-all"
                     onClick={() => deleteTask(todo.id)}
                   >
                     <Trash2 size={16}/>                  
@@ -228,7 +247,10 @@ function App() {
               ))}            
             </ul>
           )}          
-        </div>             
+        </div>     
+        ) : (
+          <NotTasks/>
+        )}        
       </div>
     </div>
   )
