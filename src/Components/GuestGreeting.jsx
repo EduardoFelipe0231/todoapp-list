@@ -13,7 +13,7 @@ export default function GuestGreeting( ){
     }
 
     return(
-        <div className="flex flex-col items-center justify-center text-zinc-700 ">
+        <div className="flex flex-col items-center justify-center text-zinc-900 ">
               <h1 className="text-center mt-6 text-3xl font-bold tracking-wide">Olá, Visitante <span className='text-3xl'>{emojiRandom()}</span></h1>
               <p className="font-extralight text-lg">Hoje é {currentDate()}</p>
           </div> 
