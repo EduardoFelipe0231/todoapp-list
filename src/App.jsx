@@ -160,7 +160,7 @@ function App() {
             data-tooltip-place="top"            
           >
             
-            <Plus size={16}/>
+            <Plus size={17}/>
             <Tooltip id="my-Adicionar" />
           </button>
         </form>

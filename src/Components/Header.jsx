@@ -7,6 +7,8 @@ export default function Header() {
 
     const [theme, setTheme] = useState(true)
 
+    
+
     return(
         <div className="w-full py-6 px-3 rounded-b-4xl shadow-2xs border border-gray-200 bg-indigo-400">
           <header className="container mx-auto flex justify-between items-center gap-5">
@@ -15,7 +17,7 @@ export default function Header() {
                 className="p-2 rounded-full cursor-pointer shadow-2xl transition-all text-zinc-300 bg-zinc-900 hover:bg-zinc-900/75 hover:shadow-lg"
                 onClick={() => {setTheme(!theme)}}
                 >
-                {theme  ? <Moon size={22} /> : <Sun size={22} />}
+                {theme  ? <Moon size={22} /> : <Sun size={22} />}                
               </button>              
           </header>
           <GuestGreeting />     

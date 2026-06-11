@@ -1,20 +1,19 @@
 import { useEffect } from 'react'
 import { currentDate } from '../utils/CurrentDate'
 
-export default function GuestGreeting(){
-
-    
+export default function GuestGreeting( ){
 
     const emojiRandom = () => {
-        const listEmoji = ['😄','😃','😀','😊','☺','😉','😍','😘','😚','😗','😙','😜','😝','😛','😳','😁','😔','😌','😒','😞','😣','😢','😂','😭','😪','😥','😰','😅','😓','😩','😫','😨','😱','😠','😡','😤','😖','😆','😋','😷','😎','😴','😵','😲','😟','😦','😧','😈','👿','😮','😬','😐','😕','😯','😶','😇','😏','😑','👲','👳','👮','👷','💂','👶','👦','👧','👨','👩','👴','👵','👱','👼','👸','😺','😸','😻','😽','😼','🙀','😿','😹','😾','👹','👺','🙈','🙉','🙊','💀','👽','💩','🔥','✨','🌟','💫','💥','💢','💦','💧','💤','💨','👂','👀','👃','👅','👄','👍','👎','👌','👊','✊','✌','👋','✋','👐','👆','👇','👉','👈','🙌','🙏','☝','👏','💪','🚶','🏃','💃','👫','👪','👬','👭','💏','💑','👯','🙆','🙅','💁','🙋','💆','💇','💅','👰','🙎','🙍','🙇']
+        
+            const listEmoji = ['😄','😃','😀','😊','☺','😉','😍','😘','😚','😗','😙','😜','😝','😛','😳','😁','😔','😌','😒','😞','😣','😢','😂','😭','😪','😥','😰','😅','😓','😩','😫','😨','😱','😠','😡','😤','😖','😆','😋','😷','😎','😴','😵','😲','😟','😦','😧','😈','👿','😮','😬','😐','😕','😯','😶','😇','😏','😑','👲','👳','👮','👷','💂','👶','👦','👧','👨','👩','👴','👵','👱','👼','👸','😺','😸','😻','😽','😼','🙀','😿','😹','😾','👹','👺','🙈','🙉','🙊','💀','👽','💩','🔥','✨','🌟','💫','💥','💢','💦','💧','💤','💨','👂','👀','👃','👅','👄','👍','👎','👌','👊','✊','✌','👋','✋','👐','👆','👇','👉','👈','🙌','🙏','☝','👏','💪','🚶','🏃','💃','👫','👪','👬','👭','💏','💑','👯','🙆','🙅','💁','🙋','💆','💇','💅','👰','🙎','🙍','🙇']
+            
+            const randomEmoji = listEmoji[Math.floor(Math.random() * listEmoji.length)]
 
-        const randomEmoji = listEmoji[Math.floor(Math.random() * listEmoji.length)]
-
-        return randomEmoji
+            return    
     }
 
     return(
-        <div className="flex flex-col items-center justify-center text-zinc-900 ">
+        <div className="flex flex-col items-center justify-center text-zinc-700 ">
               <h1 className="text-center mt-6 text-3xl font-bold tracking-wide">Olá, Visitante <span className='text-3xl'>{emojiRandom()}</span></h1>
               <p className="font-extralight text-lg">Hoje é {currentDate()}</p>
           </div> 
