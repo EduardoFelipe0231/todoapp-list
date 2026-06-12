@@ -22,9 +22,11 @@ import {
   Bell, 
   Sun,
   Bus,
-  StarIcon} 
+  StarIcon,
+  Sparkles} 
 from "lucide-react"
 import Header from "./Components/Header";
+import Footer from "./Components/Footer";
 import { ToastContainer, toast, Bounce, Zoom} from 'react-toastify';
 
 function App() {
@@ -57,7 +59,7 @@ function App() {
     if(taskInput.trim()) {
       const newTask = {
         id: Date.now(),
-        text: taskInput,
+        text: taskInput.trim(),
         done: false,
       };
 
@@ -76,7 +78,9 @@ function App() {
 
   //deletar tarefa com base no ID clicado, passamos o "taskID" como parametro da função, e no botão passamos o parametro "todo" com base no novo array criado..
   const deleteTask = (taskId) => {
-    if(window.confirm("Você tem certeza que deseja remover essa tarefa?"))
+    const confirmedDelete = window.confirm("Você tem certeza que deseja remover essa tarefa?")
+
+    if(confirmedDelete)
     setTask(task.filter((t) => t.id !== taskId ));
     toast.success("Deletou essa tarefa")
   }
@@ -84,12 +88,22 @@ function App() {
 
   //deletar toda as tarefas
   const deleteAllTasks = () => {
-    const confirmed = window.confirm("Deseja excluir todas as tarefas?")
+    const confirmedAll = window.confirm("Deseja excluir todas as tarefas?")
 
-     if(confirmed) {
+     if(confirmedAll) {
         setTask([])
         toast.info("Tarefas excluidas com sucesso")
      }  
+  }
+
+  // completar a tarefa
+  const completeTodo = (id) => {
+        setTask((prev) => 
+          prev.map((ct) =>
+          ct.id === id ? { ...ct, done: !ct.done}
+        : ct
+      )  
+    )
   }
 
   // =============================================================== \\
@@ -105,21 +119,21 @@ function App() {
   // =============================================================== \\ 
 
     const contextClass = {
-    success: "bg-emerald-50 border border-emerald-900 text-emerald-900 font-zinc-200",
-    error: "bg-rose-100 border border-red-800 text-red-800",
-    info: "bg-cyan-50 border border-teal-900 text-teal-900",
-    warning: "bg-amber-50 border border-yellow-950 text-yellow-950",
-    default: "bg-emerald-50 border border-emerald-900 text-emerald-900",
-    dark: "bg-emerald-50 border border-emerald-900 text-emerald-900",
+    success: "bg-emerald-50 border border-emerald-700 text-emerald-900 font-zinc-200",
+    error: "bg-rose-100 border border-red-700 text-red-800",
+    info: "bg-cyan-50 border border-teal-700 text-teal-900",
+    warning: "bg-amber-50 border border-yellow-750 text-yellow-950",
+    default: "bg-emerald-50 border border-emerald-700 text-emerald-900",
+    dark: "bg-zinc-50 border border-zinc-900 text-zinc-900",
   };
     
   return (
     
-    <div className="min-h-screen flex flex-col items-center text-sm md:text-base bg-slate-100">
+    <div className="min-h-screen flex flex-col flex-1 items-center text-sm md:text-base bg-slate-100 relative ">
       <ToastContainer
         toastClassName={(context) =>
           contextClass[context?.type || "default"] +
-          " relative flex p-6 min-h-17 rounded-lg overflow-hidden cursor-pointer flex items-center justify-center"
+          " relative flex px-6 min-h-13 rounded-lg overflow-hidden cursor-pointer flex items-center justify-center"
         }
         position="bottom-center"
         autoClose={2000}
@@ -130,14 +144,14 @@ function App() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
+        theme="dark"
         transition={Bounce}
         />
 
       {/* Component Header */}
       <Header />
 
-      <div className="mx-auto p-5 max-w-180 w-full space-y-5">
+      <div className="mx-auto p-5 max-w-180 w-full space-y-5 ">
         {/* form */}
         <form action="#" className="flex rounded-sm gap-2" onSubmit={addTask}>
 
@@ -154,22 +168,24 @@ function App() {
             
           <button
             type="submit" 
-            className="px-5 cursor-pointer transition-all rounded-2xl bg-indigo-400 hover:bg-indigo-400/75 text-white"
+            className="px-5 cursor-pointer transition-all rounded-2xl bg-indigo-400 hover:bg-indigo-400/75 text-white disabled:opacity-50"
             data-tooltip-id="my-Adicionar"
             data-tooltip-content="Adicionar"
-            data-tooltip-place="top"            
+            data-tooltip-place="top"     
+            disabled={!taskInput.trim()}       
           >
             
             <Plus size={17}/>
-            <Tooltip id="my-Adicionar" />
+            {!taskInput.trim() ? null : <Tooltip id="my-Adicionar" />}
           </button>
         </form>
 
+        
         {/* Botões inform */}
         <div className="flex items-center justify-between gap-3">
 
-          <div className="flex items-center gap-3 flex-1">
-            <p className="text-zinc-700 cursor-pointer">Todas <span className="rounded-full px-3 py-1.5 bg-zinc-800 text-white ">{task.length}</span></p>
+          <div className="flex items-center gap-2 flex-1 md:gap-3">
+            <p className="text-zinc-700 cursor-pointer">Todas <span className="rounded-full p-1 bg-zinc-800 text-white md:px-2 ">{task.length}</span></p>
             <p className="text-zinc-500/75 cursor-pointer hover:text-zinc-700 transition-all">Ativas </p>
             <p className="text-zinc-500/75 cursor-pointer hover:text-zinc-700 transition-all">Concluídas</p>
           </div>
@@ -206,23 +222,32 @@ function App() {
 
         {/* lista - todos */}
         {task.length > 0 ? (
-          <div className="w-full rounded-2xl space-y-3 py-4 px-1 scrollbar-thumb-zinc-500/60 scrollbar-track-zinc-900/10">
+          <div className="w-full rounded-2xl space-y-3 py-4 px-1 scrollbar-thumb-zinc-500/60 scrollbar-track-zinc-900/10 text-sm h-full max-h-123 overflow-y-auto">
           {toogleLayout ? (
             <ul className="grid grid-cols-1 gap-2 text-white">
               {task.map((todo) => (
-                <li key={todo.id} className="flex flex-wrap gap-4 p-5 rounded-2xl items-center border-l-4 border-indigo-400 bg-slate-200/60 text-zinc-700 hover:shadow cursor-pointer">
+                <li key={todo.id} className={`flex flex-wrap gap-4 p-5 rounded-2xl items-center border-l-4 bg-slate-200/60 text-zinc-700 hover:shadow cursor-pointer transition ${todo.done ? "border-red-400" : "border-indigo-400"}`}>
                   <button 
-                    className="hover:text-zinc-400 cursor-pointer transition-all"
+                    className={`cursor-pointer transition-all  ${todo.done ? "text-gray-400" : "text-zinc-700"}`}
+                    onClick={() => completeTodo(todo.id)}
                   >
-                    <Circle size={16}/>                  
+                    {todo.done ?  <CircleCheckBig size={17}/> : <Circle size={16}/> }                 
                   </button> 
-                  <p className="break-all flex-1">{todo.text}</p>   
+
+                  <p className={` break-all flex-1 ${todo.done ? "line-through text-gray-400" : ""}`}>{todo.text}</p>   
                                  
-                  <button 
-                    className="hover:text-zinc-400 cursor-pointer transition-all"
-                  >
-                    <Pencil size={16}/>                  
+                  {todo.done ? (
+                      null
+                  ) : (
+                    <button 
+                      className="hover:text-zinc-400 cursor-pointer transition-all"
+                    >
+                      <Pencil size={16}/>                  
                   </button>
+
+                  )}
+
+
                   <button 
                     className="hover:text-red-400/75 cursor-pointer transition-all"
                     onClick={() => deleteTask(todo.id)}
@@ -233,9 +258,9 @@ function App() {
               ))}            
             </ul>
           ) : (
-            <ul className="grid grid-cols-2 gap-2 text-white">
+            <ul className="grid grid-cols-2 gap-2 text-white " >
               {task.map((todo) => (
-                <li key={todo.id} className="flex flex-wrap gap-3 px-2 py-6 rounded-2xl items-center border-l-4 border-indigo-400 bg-slate-200/60 text-zinc-700 hover:shadow cursor-pointer ">
+                <li key={todo.id} className="flex flex-wrap gap-3 px-2 py-6 rounded-2xl items-center border-l-4 border-indigo-400 bg-slate-200/60 text-zinc-700 hover:shadow cursor-pointer">
                   <button 
                     className="hover:text-indigo-400 cursor-pointer transition-all"
                   >
@@ -265,6 +290,9 @@ function App() {
           />
         )}        
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }
