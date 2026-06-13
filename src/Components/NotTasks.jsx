@@ -1,6 +1,6 @@
 import { Clipboard } from "lucide-react"
 
-export default function NotTasks({Icon, title, subtitle}){
+export default function NotTasks({title, subtitle, icon}){
     return (
         <div className="w-full flex flex-col items-center justify-center text-zinc-700 mt-26 tracking-wider text-center ">
             <Clipboard size={30}/>

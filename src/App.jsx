@@ -1,32 +1,14 @@
 import { useEffect, useState } from "react";
-import { tabTitle} from "./utils/General";
-import { Tooltip } from 'react-tooltip'
-import NotTasks from './Components/NotTasks'
 
-import { 
-  Trash2, 
-  Circle, 
-  Pencil, 
-  CircleCheckBig, 
-  Grid, 
-  List, 
-  LayoutGrid, 
-  Delete, 
-  Trash, 
-  Plus, 
-  Check, 
-  CheckCircle, 
-  CheckCircle2, 
-  CheckCircle2Icon, 
-  Moon, 
-  Bell, 
-  Sun,
-  Bus,
-  StarIcon,
-  Sparkles} 
-from "lucide-react"
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
+import Form from "./Components/Form";
+import Button from "./Components/Buttons";
+import ListItem from "./Components/ListItem";
+import NotTasks from './Components/NotTasks'
+
+import { tabTitle} from "./utils/General";
+import { Tooltip } from 'react-tooltip'
 import { ToastContainer, toast, Bounce, Zoom} from 'react-toastify';
 
 function App() {
@@ -67,8 +49,7 @@ function App() {
       setTask([...task, newTask]);
       toast.success("Tarefa adicionada com sucesso")
       setTaskInput("");
-    }   
-    
+    }    
   }
 
   //função onChange input - value.  
@@ -101,11 +82,12 @@ function App() {
         setTask((prev) => 
           prev.map((ct) =>
           ct.id === id ? { ...ct, done: !ct.done}
-        : ct
-      )  
+        : ct        
+      )        
     )
+    console.log(id)
   }
-
+  
   // =============================================================== \\
 
   //Titulo Página dinâmico
@@ -130,12 +112,13 @@ function App() {
   return (
     
     <div className="min-h-screen flex flex-col flex-1 items-center text-sm md:text-base bg-slate-100 relative ">
+      
       <ToastContainer
         toastClassName={(context) =>
           contextClass[context?.type || "default"] +
           " relative flex px-6 min-h-13 rounded-lg overflow-hidden cursor-pointer flex items-center justify-center"
         }
-        position="bottom-center"
+        position="bottom-left"
         autoClose={2000}
         hideProgressBar={true}
         newestOnTop={false}
@@ -148,150 +131,45 @@ function App() {
         transition={Bounce}
         />
 
-      {/* Component Header */}
+      {/* =================== Header =================== */}
       <Header />
 
       <div className="mx-auto p-5 max-w-180 w-full space-y-5 ">
-        {/* form */}
-        <form action="#" className="flex rounded-sm gap-2" onSubmit={addTask}>
 
-          <input 
-            type="text" 
-            name="text" 
-            id="text" 
-            placeholder="Adicionar nova tarefa" 
-            value={taskInput}
-            onChange={handleInput}
-            className="flex-1 py-4 px-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-2xl bg-slate-200/60 border border-gray-200"
-            autoComplete="off"
-          />
-            
-          <button
-            type="submit" 
-            className="px-5 cursor-pointer transition-all rounded-2xl bg-indigo-400 hover:bg-indigo-400/75 text-white disabled:opacity-50"
-            data-tooltip-id="my-Adicionar"
-            data-tooltip-content="Adicionar"
-            data-tooltip-place="top"     
-            disabled={!taskInput.trim()}       
-          >
-            
-            <Plus size={17}/>
-            {!taskInput.trim() ? null : <Tooltip id="my-Adicionar" />}
-          </button>
-        </form>
+        {/* =================== form =================== */}        
+        <Form addTask={addTask} taskInput={taskInput} handleInput={handleInput}/>
 
         
-        {/* Botões inform */}
-        <div className="flex items-center justify-between gap-3">
-
-          <div className="flex items-center gap-2 flex-1 md:gap-3">
-            <p className="text-zinc-700 cursor-pointer">Todas <span className="rounded-full p-1 bg-zinc-800 text-white md:px-2 ">{task.length}</span></p>
-            <p className="text-zinc-500/75 cursor-pointer hover:text-zinc-700 transition-all">Ativas </p>
-            <p className="text-zinc-500/75 cursor-pointer hover:text-zinc-700 transition-all">Concluídas</p>
-          </div>
-
-          {/* Deletar botão */}
-          {task.length > 0 && 
-              <button 
-                  className="flex items-center justify-center p-4 gap-1 cursor-pointer rounded-2xl bg-red-400 hover:bg-red-400/75 transition-all text-white "
-                  onClick={deleteAllTasks}
-                  data-tooltip-id="my-tooltip"
-                  data-tooltip-content="Excluir todos os itens"
-                  data-tooltip-place="bottom" 
-                  >
-                  <Trash2 size={16} />
-              </button>}
-
-          {/* grid - list */}
-          {task.length > 0 &&      
-              
-                  <button 
-                    className="flex items-center justify-center p-4 gap-1 cursor-pointer rounded-2xl bg-zinc-600 hover:bg-zinc-600/75 transition-all text-white "
-                    onClick={() => {setToogleLayout(!toogleLayout)}}
-                    data-tooltip-id="my-tooltip"
-                    data-tooltip-content="Layout"
-                    data-tooltip-place="bottom" 
-                  >
-                    {toogleLayout ? <LayoutGrid size={16}/> : <List size={16}/>}
-                    <Tooltip id="my-tooltip" />
-                  </button>                
-                          
-          }          
-        </div>
+        {/* =================== Buttons =================== */}        
+        <Button task={task} deleteAllTasks={deleteAllTasks} toogleLayout={toogleLayout} setToogleLayout={setToogleLayout } />         
 
 
-        {/* lista - todos */}
+        {/* =================== Lista =================== */}
         {task.length > 0 ? (
           <div className="w-full rounded-2xl space-y-3 py-4 px-1 scrollbar-thumb-zinc-500/60 scrollbar-track-zinc-900/10 text-sm h-full max-h-123 overflow-y-auto">
-          {toogleLayout ? (
-            <ul className="grid grid-cols-1 gap-2 text-white">
-              {task.map((todo) => (
-                <li key={todo.id} className={`flex flex-wrap gap-4 p-5 rounded-2xl items-center border-l-4 bg-slate-200/60 text-zinc-700 hover:shadow cursor-pointer transition ${todo.done ? "border-red-400" : "border-indigo-400"}`}>
-                  <button 
-                    className={`cursor-pointer transition-all  ${todo.done ? "text-gray-400" : "text-zinc-700"}`}
-                    onClick={() => completeTodo(todo.id)}
-                  >
-                    {todo.done ?  <CircleCheckBig size={17}/> : <Circle size={16}/> }                 
-                  </button> 
-
-                  <p className={` break-all flex-1 ${todo.done ? "line-through text-gray-400" : ""}`}>{todo.text}</p>   
-                                 
-                  {todo.done ? (
-                      null
-                  ) : (
-                    <button 
-                      className="hover:text-zinc-400 cursor-pointer transition-all"
-                    >
-                      <Pencil size={16}/>                  
-                  </button>
-
-                  )}
-
-
-                  <button 
-                    className="hover:text-red-400/75 cursor-pointer transition-all"
-                    onClick={() => deleteTask(todo.id)}
-                  >
-                    <Trash2 size={16}/>                  
-                  </button>                 
-                </li>
-              ))}            
-            </ul>
-          ) : (
-            <ul className="grid grid-cols-2 gap-2 text-white " >
-              {task.map((todo) => (
-                <li key={todo.id} className="flex flex-wrap gap-3 px-2 py-6 rounded-2xl items-center border-l-4 border-indigo-400 bg-slate-200/60 text-zinc-700 hover:shadow cursor-pointer">
-                  <button 
-                    className="hover:text-indigo-400 cursor-pointer transition-all"
-                  >
-                    <Circle size={16}/>                  
-                  </button> 
-                  <p className="break-all flex-1">{todo.text}</p>                
-                  <button 
-                    className="hover:text-zinc-400 cursor-pointer transition-all"
-                  >
-                    <Pencil size={16}/>                  
-                  </button>
-                  <button 
-                    className="hover:text-red-300/75 cursor-pointer transition-all"
-                    onClick={() => deleteTask(todo.id)}
-                  >
-                    <Trash2 size={16}/>                  
-                  </button>                 
-                </li>
-              ))}            
-            </ul>
-          )}          
-        </div>     
-        ) : (
-          <NotTasks            
-            title={"Você ainda não tem tarefas cadastradas"}
-            subtitle={"Crie tarefas e organize seus itens a fazer"}
-          />
-        )}        
+              {toogleLayout ? (
+                <ul className="grid grid-cols-1 gap-2 text-white">
+                  {task.map((todo) => (
+                    <ListItem key={todo.id} task={task} todo={todo} deleteTask={deleteTask}/>
+                  ))}            
+                </ul>
+              ) : (
+                <ul className="grid grid-cols-2 gap-2 text-white">
+                  {task.map((todo) => (
+                    <ListItem key={todo.id} task={task} todo={todo} deleteTask={deleteTask}/>
+                  ))}            
+                </ul>
+              )}          
+          </div>     
+            ) : (
+              <NotTasks                        
+                title={"Você ainda não tem tarefas cadastradas"}
+                subtitle={"Crie tarefas e organize seus itens a fazer"}
+              />
+            )}        
       </div>
 
-      {/* Footer */}
+      {/* =================== Footer =================== */}   
       <Footer />
     </div>
   )
