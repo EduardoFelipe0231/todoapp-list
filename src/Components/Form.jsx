@@ -12,7 +12,7 @@ const Form = ( { addTask , taskInput , handleInput  }) => {
             placeholder="Adicionar nova tarefa" 
             value={taskInput}
             onChange={handleInput}
-            className="flex-1 py-4 px-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-2xl bg-slate-200/60 border border-gray-200"
+            className="flex-1 py-4 px-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-2xl bg-slate-200/60 border border-gray-200 dark:dark:border-zinc-700 dark:bg-zinc-600 dark:text-zinc-100 placeholder-zinc-400"
             autoComplete="off"
           />
             

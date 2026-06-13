@@ -85,7 +85,6 @@ function App() {
         : ct        
       )        
     )
-    console.log(id)
   }
   
   // =============================================================== \\
@@ -111,7 +110,7 @@ function App() {
     
   return (
     
-    <div className="min-h-screen flex flex-col flex-1 items-center text-sm md:text-base bg-slate-100 relative ">
+    <div className="min-h-screen flex flex-col flex-1 items-center text-sm md:text-base bg-slate-100 relative dark:bg-zinc-700 ">
       
       <ToastContainer
         toastClassName={(context) =>
@@ -141,8 +140,7 @@ function App() {
 
         
         {/* =================== Buttons =================== */}        
-        <Button task={task} deleteAllTasks={deleteAllTasks} toogleLayout={toogleLayout} setToogleLayout={setToogleLayout } />         
-
+        <Button task={task} deleteAllTasks={deleteAllTasks} toogleLayout={toogleLayout} setToogleLayout={setToogleLayout }  />         
 
         {/* =================== Lista =================== */}
         {task.length > 0 ? (
@@ -150,13 +148,13 @@ function App() {
               {toogleLayout ? (
                 <ul className="grid grid-cols-1 gap-2 text-white">
                   {task.map((todo) => (
-                    <ListItem key={todo.id} task={task} todo={todo} deleteTask={deleteTask}/>
+                    <ListItem key={todo.id} task={task} todo={todo} deleteTask={deleteTask} completeTodo={completeTodo}/>
                   ))}            
                 </ul>
               ) : (
                 <ul className="grid grid-cols-2 gap-2 text-white">
                   {task.map((todo) => (
-                    <ListItem key={todo.id} task={task} todo={todo} deleteTask={deleteTask}/>
+                    <ListItem key={todo.id} task={task} todo={todo} deleteTask={deleteTask} completeTodo={completeTodo}/>
                   ))}            
                 </ul>
               )}          

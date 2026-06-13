@@ -5,9 +5,9 @@ const Button = ( {task ,toogleLayout, deleteAllTasks, setToogleLayout  }) => {
     return(
         <div className="flex items-center justify-between gap-3">        
             <div className="flex items-center gap-2 flex-1 md:gap-3">
-                <p className="text-zinc-700 cursor-pointer">Todas <span className="rounded-full p-1 bg-zinc-800 text-white md:px-2 ">{task.length}</span></p>
-                <p className="text-zinc-500/75 cursor-pointer hover:text-zinc-700 transition-all">Ativas </p>
-                <p className="text-zinc-500/75 cursor-pointer hover:text-zinc-700 transition-all">Concluídas</p>
+                <p className="text-zinc-700 cursor-pointer dark:text-zinc-100">Todas <span className="rounded-full p-1 bg-zinc-800 text-zinc-100 md:px-2 ">{task.length}</span></p>
+                <p className="text-zinc-500/75 cursor-pointer hover:text-zinc-700 transition-all dark:text-zinc-400 dark:hover:text-indigo-300">Ativas </p>
+                <p className="text-zinc-500/75 cursor-pointer hover:text-zinc-700 transition-all dark:text-zinc-400 dark:hover:text-indigo-300">Concluídas</p>
             </div>
 
             {/* Deletar botão */}

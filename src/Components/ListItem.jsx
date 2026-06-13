@@ -1,9 +1,9 @@
 import { Pencil, CircleCheckBig, Trash2, Circle } from "lucide-react"
 
-const ListItem = ( {task, todo, deleteTask}) => {
+const ListItem = ( {task, todo, deleteTask , completeTodo}) => {
     return(
         <>
-            <li key={todo.id} className={`flex flex-wrap gap-4 p-5 rounded-2xl items-center border-l-4 bg-slate-200/60 text-zinc-700 hover:shadow cursor-pointer transition ${todo.done ? "border-red-400" : "border-indigo-400"}`}>
+            <li key={todo.id} className={`flex flex-wrap gap-4 p-5 rounded-2xl items-center border-l-4 bg-slate-200/60 text-zinc-700 hover:shadow cursor-pointer transition ${todo.done ? "border-teal-400" : "border-indigo-400"} dark:bg-zinc-600 dark:text-zinc-100`}>
                   <button 
                     className={`cursor-pointer transition-all  ${todo.done ? "text-gray-400" : "text-zinc-700"}`}
                     onClick={() => completeTodo(todo.id)}
